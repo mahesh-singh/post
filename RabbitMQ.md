@@ -75,8 +75,10 @@ It runs on all major operating system (http://www.rabbitmq.com/platforms.html) a
 RabbitMQ server is written in the Erlang programming language and is built on the Open Telecom Platform framework for clustering and failover.
 
 From Erlang website
+What is Erlang?
 >Erlang is a programming language used to build massively scalable soft real-time systems with requirements on high availability. Some of its uses are in telecoms, banking, e-commerce, computer telephony and instant messaging. Erlang's runtime system has built-in support for concurrency, distribution and fault tolerance.
 
+What is OTP?
 >OTP is set of Erlang libraries and design principles providing middle-ware to develop these systems. It includes its own distributed database, applications to interface towards other languages, debugging and release handling tools.
 
 WhatsApp uses Erlang to run messaging servers, achieving up to 2 million connected users per server.
