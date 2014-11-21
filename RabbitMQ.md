@@ -125,7 +125,7 @@ Default user name and passowrd is guest & guest
 ##Elements
 Producer create message and send (publish) into message broker (RabbitMQ). Message must have to parts: a payloads and a label. Payload is data and it can be anything from a simple JSON to MPEG-4 file. Label describe the payloads and how rabbitMQ will determine who should get the copy of message. The communication between publisher and rabbitMQ is one directional and fire and forget.
 
-![Alt text](/img/produce_consumer_rabbitmq.jpg)
+![Alt text](https://github.com/mahesh-singh/post/raw/master/img/produce_consumer_rabbitmq.jpg)
 
 
 
