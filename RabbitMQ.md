@@ -107,31 +107,48 @@ RabbitMQ also comes with web based management plugin which is quite handy to man
 Steps to install management plugin  
 - Open command prompt
 - Run following command from <RabbitMQ installation folder>/sbin
+
     `rabbitmq-plugins.bat enable rabbitmq_management`
+
+![Producer and Consumer in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/rabbit_manag_plugin.png)
+    
 - Restart the RabbitMQ by following command
+
     `rabbitmq-service.bat stop`
     `rabbitmq-service.bat start`
+
 By default management plugin will run on http://localhost:55672/
 Default user name and passowrd is guest & guest
 
 ##Basic operation 
 -To stop RabbitMQ along with Erlang
+
     `rabbitmqctl stop`
 - Stop/Start RabbitMQ only
+
     `rabbitmqctl stop_app`
     `rabbitmqctl start_app`
 
 
 ##Elements
-Producer create message and send (publish) into message broker (RabbitMQ). Message must have to parts: a payloads and a label. Payload is data and it can be anything from a simple JSON to MPEG-4 file. Label describe the payloads and how rabbitMQ will determine who should get the copy of message. The communication between publisher and rabbitMQ is one directional and fire and forget.
+**Producer** create message and send (publish) into message broker (RabbitMQ). Message must have to parts: a payloads and a label. Payload is data and it can be anything from a simple JSON to MPEG-4 file. Label describe the payloads and how rabbitMQ will determine who should get the copy of message. The communication between publisher and rabbitMQ is one directional and fire and forget.
 
-![Alt text](https://github.com/mahesh-singh/post/raw/master/img/produce_consumer_rabbitmq.jpg)
+**Consumer** on the other hand attach to brocker and subscibe to a queue to get the message.  
+
+![Producer and Consumer in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/produce_consumer_rabbitmq.jpg)
+
+Your app can be producer when it needs to send message to another applications, or it can be consumer when it needs to receive the message. 
+
+####Connect to RabbitMQ
+Applications will connect to rabbitMQ by creating TCP connection and get authenticated. Setting up and tearing down TCP session is an expensive for OS. AMPQ have a concept of **channel** which is a virtual connection inside a real TCP connection. Publisher/Consumer apps use channel to issue AMQP command to broker. A single TCP connection can be use to establish multiple communictaion path between application and broker. Publisher writes to channel and consumrt read through channel.
 
 
+###Exchanges, Queues and Binding
+**Exchange:** Publisher publish messages in exchange.
+**Queue:** Message end up in queue and receive by consumer.
+**Binding:** Rule to route the message into one or more queue.
 
-###Exchanges
-###Queues
-###Binding
+  
 
 ##Administering
 ##Summery
