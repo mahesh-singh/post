@@ -1,36 +1,37 @@
 # Rabbit MQ : Understanding message broker
 
 ##Where is the problem?
-Our new customer just started sprint one with TPG team and the first story which we are delivering is registration module. We are re-writing this module from scratch.
+Our new customer just started sprint and the first story which we are delivering is registration module. We are re-writing this module from scratch.
 
 [Enter mock-up]
 
-Developers put their best effort to write entire module, used all necessarily design patterns. Every thing was great until product team ask for a change, that welcome email message must sent after the successful registration. Change  accepted and we used third party SMTP server to send the messages.
+Developers put their best effort to finsh entire module. Every thing was great until copule of change request comes.
 
-Suddenly we receive another change from sales team which just sign up with affiliate company which going to give us lots of registration. To track the registration through affiliate link, post registration an affiliate API must be called. Change accepted and registration module tested and ready to deploy.
+1. Welcome email message must sent after the successful registration. Third party SMTP server must used to send the required messages. 
+2. Registration trough diffrent affiliate link and track those registration through third party API to compare the affiliate performence. 
+3. Log audit information about user like registration like time, location etc  
 
-Suddenly legal team comes and say we cannot launch until we maintain the audit log of user's registration like time, location, some other basic information. Change accepted again modify the code and logged all the information in audit table. We are ready to launch. 
+Everything was done, tested and deployed. 
 
 Your code will look likes
 
 [Sample code]
 
-Our new shiny registration module went live and lots of new customers are ready to sign up. Suddenly registration module show error after user finish the registration. Production team investigated and found third party SMTP APIs are down. Problem resolved at SMPTP provider but during that time we got the registration but user never received confirmation emails.
+New shiny registration module went live and work like a charm. Suddenly registration module show error once user finish the registration. Investigation shows that third party SMTP APIs were down for some time. During the downtime user registered but never received confirmation emails.
 
 Also amuse what if
-- Affiliate API stops working
+- Third party API stops working
 - Audit log table get locked due to high tragic
 - You asked to send user's information to other internal system which are written in different language.
-- Any many more cases 
+- Any many more such cases where direct communication required between applications
 
 ##Can our code scale to new requirement or remove dependency of third party APIs?
 
 
-
 ##What is messaging
 A way of exchange messages from point A to point B or many points C.
-Its enables distributed communication that is loosely coupled. Message sender  sends a message to a destination, and the message recipient can retrieve the message from the destination. However, the sender and the receiver do not have to be available at the same time in order to communicate.
-To understand better email is a great example of messaging which enables people to co
+Its enables distributed communication that is loosely coupled. Message sender  sends a message to a **destination**, and the message recipient can retrieve the message from the **destination**. However, the sender and the receiver do not have to be available at the same time in order to communicate.
+To understand better email is a great example of messaging which enables people to communicate
 People use messaging for scale the applications. 
 You want to use messaging
 - Send data to many applications without calling their API directly in your application. 
@@ -96,12 +97,36 @@ RabbitMQ have following advantages
 - And many more 
 
 ## Installation
+**Erlang:** Download and install Erlang (OTP R16B03-1 Windows 64bit Binary Release) from http://www.erlang.org/download.html
+
+**RabbitMQ:** Download and install RabbitMQ server for window from http://www.rabbitmq.com/download.html 
+
+RabbitMQ will be installed as a windows services
+
+RabbitMQ also comes with web based management plugin which is quite handy to manage RabbitMQ.
+Steps to install management plugin  
+- Open command prompt
+- Run following command from <RabbitMQ installation folder>/sbin
+    `rabbitmq-plugins.bat enable rabbitmq_management`
+- Restart the RabbitMQ by following command
+    `rabbitmq-service.bat stop`
+    `rabbitmq-service.bat start`
+By default management plugin will run on http://localhost:55672/
+Default user name and passowrd is guest & guest
+
+##Basic operation 
+-To stop RabbitMQ along with Erlang
+    `rabbitmqctl stop`
+- Stop/Start RabbitMQ only
+    `rabbitmqctl stop_app`
+    `rabbitmqctl start_app`
 
 
 ##Elements
 Producer create message and send (publish) into message broker (RabbitMQ). Message must have to parts: a payloads and a label. Payload is data and it can be anything from a simple JSON to MPEG-4 file. Label describe the payloads and how rabbitMQ will determine who should get the copy of message. The communication between publisher and rabbitMQ is one directional and fire and forget.
 
-[Image]
+![Alt text](/img/produce_consumer_rabbitmq.jpg)
+
 
 
 ###Exchanges
