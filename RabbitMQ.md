@@ -110,7 +110,6 @@ Steps to install management plugin
 
     `rabbitmq-plugins.bat enable rabbitmq_management`
 
-![Producer and Consumer in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/rabbit_manag_plugin.png)
     
 - Restart the RabbitMQ by following command
 
@@ -119,6 +118,10 @@ Steps to install management plugin
 
 By default management plugin will run on http://localhost:55672/
 Default user name and passowrd is guest & guest
+
+![Producer and Consumer in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/rabbit_manag_plugin.png)
+
+
 
 ##Basic operation 
 -To stop RabbitMQ along with Erlang
@@ -144,11 +147,34 @@ Applications will connect to rabbitMQ by creating TCP connection and get authent
 
 
 ###Exchanges, Queues and Binding
-**Exchange:** Publisher publish messages in exchange.
-**Queue:** Message end up in queue and receive by consumer.
-**Binding:** Rule to route the message into one or more queue.
+**Exchange:** Producer publish messages in exchange. Producer never directly communicate through consumer applications
 
-  
+**Queue:** Message end up in queue and receive by consumer.
+
+**Binding:** Rule to route the message into one or more queue. This is relationship between exchange and a queue.
+
+When producer publish message in exchange, it contains two parts a payloads and a label. Label is called routing key. Each queue is bound to a routing key or a pattern of routing key. This routing key binding with queue are those rules for which exchange put message into queue.
+
+Exchange receives messages from producer and the other side it pushes them to queues. The exchange must know exactly what to do with a message it receives. Should it be appended to a particular queue? Should it be appended to many queues? Or should it get discarded. The rules for that are defined by the exchange type.  
+
+There are mainly four type of exchanges available: direct, topic, headers and fanout. This tutorial will focus on direct, topic and fanout exchange.
+
+**Fanout Exchange:** It brodcast all the messges it recive to all the queues it knows. 
+
+![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/fanout_ex_rabbit.jpg)
+
+[sample code]
+
+**Direct exchange:**
+As we have seen Fanout exchange broadcasts all messages to all queues. In direct exchange message goes to the queues whose binding key exactly matches the routing key (label) of the message. In direct exchange it is also perfectly legal to bind multiple queues with the same binding key.
+
+In below example Q1 & Q2 is bind with routing key "Orange", Q3 with yellow and Q4 with Orange, black and green.
+
+- Excannge receive message with "Orange"  routing key it will dilliver  message to Q1, Q2, and Q4 
+- Excannge receive message with "Yellow" routing key it will dilliver message to Q3.
+- Exchange receive message with "Green" routing key it will dilliver to Q4. 
+
+![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/direct_exchange_Rabbit.jpg)
 
 ##Administering
 ##Summery
