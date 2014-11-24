@@ -3,7 +3,7 @@
 ##Where is the problem?
 Our new customer just started sprint and the first story which we are delivering is registration module. We are re-writing this module from scratch.
 
-[Enter mock-up]
+![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/mockup_registration.png)
 
 Developers put their best effort to finsh entire module. Every thing was great until copule of change request comes.
 
@@ -68,7 +68,8 @@ In nullset AMQP defines
 - How to get there (Delivery)
 - What goes in must come out (Fidelity) 
 
-AMQP is standard(http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol), wire level protocol (communicating with a remote machine or  getting data from point to point http://en.wikipedia.org/wiki/Wire_protocol) and have many implementations(http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol#Implementations).
+[AMQP](http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol "AMQP")
+ is standard(), wire level protocol (communicating with a remote machine or  getting data from point to point http://en.wikipedia.org/wiki/Wire_protocol) and have many implementations(http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol#Implementations).
 
 **RabbitMQ** is open source message broker software that implements the Advanced Message Queuing Protocol (AMQP). 
 
