@@ -15,7 +15,22 @@ Everything was done, tested and deployed.
 
 Your code will look likes
 
-[Sample code]
+```
+public void RegisterUser(User user)
+{
+    //Register user
+    userService.Register(user);
+
+    //Send welcome email
+    emailService.SendWelcomeEmail(user)
+
+    //Call third party api for affiliate tarcking
+    someThirdPartyWrapper.log(user)
+
+    //audit log
+    auditLogger.log(user)
+}
+```
 
 New shiny registration module went live and work like a charm. Suddenly registration module show error once user finish the registration. Investigation shows that third party SMTP APIs were down for some time. During the downtime user registered but never received confirmation emails.
 
@@ -26,7 +41,27 @@ Also amuse what if
 - Any many more such cases where direct communication required between applications
 
 ##Can our code scale to new requirement or remove dependency of third party APIs?
+Assume that if our RegisterUser method will only register the user. Other task can be performed by other applications without impacting the user registration.
 
+Lets change the code
+
+```
+public void RegisterUser(User user)
+{
+    //Register user
+    userService.Register(user);
+
+   //Send message about user's registration
+   var message = new Message()
+   {
+    //user's registration information
+   }
+   messagingService.SendMessage(message)
+}
+```
+
+These message can be stored in central places so that other application can access. Now email service, third party APIs and audit log service can run independently and perform their task without impacting user registration module.
+Even in case of any issues in email or third party service our registration module keep working and once these services up again they can continue their task without losing any data. 
 
 ##What is messaging
 A way of exchange messages from point A to point B or many points C.
@@ -69,13 +104,13 @@ In nullset AMQP defines
 - What goes in must come out (Fidelity) 
 
 [AMQP](http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol "AMQP")
- is standard(), wire level protocol (communicating with a remote machine or  getting data from point to point http://en.wikipedia.org/wiki/Wire_protocol) and have many implementations(http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol#Implementations).
+ is standard, [wire level protocol](http://en.wikipedia.org/wiki/Wire_protocol, "wire level protocol") (communicating with a remote machine or  getting data from point to point ) and have many [implementations](http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol#Implementations).
 
 **RabbitMQ** is open source message broker software that implements the Advanced Message Queuing Protocol (AMQP). 
 
 ##Hello RabbitMQ
 Rabbit MQ is nothing more than a message broker. All it does take messages and send to other places in pretty smart way. AMPQ is the protocol that it implements. Its completely language neutral you can write to them and read to them in any language just like you are using TCP or HTTP.
-It runs on all major operating system (http://www.rabbitmq.com/platforms.html) and support huge number of developer platforms like Java, .NET, Python, PHP, Erlang and many more (http://www.rabbitmq.com/devtools.html).
+It runs on all [major operating system](http://www.rabbitmq.com/platforms.html) and support huge number of developer platforms like [Java, .NET, Python, PHP, Erlang and many more](http://www.rabbitmq.com/devtools.html).
 
 RabbitMQ server is written in the *Erlang* programming language and is built on the *Open Telecom Platform*(OTP) framework for clustering and failover.
 
