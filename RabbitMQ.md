@@ -60,7 +60,7 @@ public void RegisterUser(User user)
 }
 ```
 
-These message can be stored in central places so that other application can access. Now email service, third party APIs and audit log service can run independently and perform their task without impacting user registration module.
+These message can be stored in central place so that other application can access. Now email service, third party APIs and audit log service can run independently and perform their task without impacting user registration module.
 Even in case of any issues in email or third party service our registration module keep working and once these services up again they can continue their task without losing any data. 
 
 ##What is messaging
@@ -211,6 +211,17 @@ In below example Q1 & Q2 is bind with routing key "Orange", Q3 with yellow and Q
 - Exchange receive message with "Green" routing key it will dilliver to Q4. 
 
 ![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/direct_exchange_Rabbit.jpg)
+
+**Topic exchange:**
+Direct exchange gives flexibility to bind routing key with queues, but still it lacks binding based upon pattern. In topic exchanges will route messages to one or many queues based on the pattern that was used to bind a queue to an exchange. Messages sent to a topic exchange can't have an arbitrary routing_key - it must be a list of words, delimited by dots. A valid routing key examples are "stock.usd.nyse", "nyse.vmw", "quick.orange.rabbit". Queues can bind with exchange bu using patterns like "*.usd.*" to get all the message where "usd" is a middle part of the message.
+
+![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/topic_exchange_rabbitMQ.jpg)
+
+In above example 
+1. Q1 will get all the message which start with log. like log.debug, log.error, log.info and log.warn etc.
+2. Q2 will get message with routing key log.error.
+3. Q3 will only get log.info message.
+4. Q4 will get all the message.
 
 ##Administering
 ##Summery
