@@ -220,6 +220,7 @@ Direct exchange gives flexibility to bind routing key with queues, but still it 
 ![Topic exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/topic_exchange_rabbitMQ.jpg)
 
 In above example 
+
 1. Q1 will get all the message which start with log. like log.debug, log.error, log.info and log.warn etc.
 
 2. Q2 will get message with routing key log.error.
@@ -228,9 +229,19 @@ In above example
 
 4. Q4 will get all the message.
 
-
 ##Summery
+Messaging enables software applications to connect and scale. RabbitMQ is fast, reliable and flexible messaging solution.  
+
 ##Further Read
+RabbitMQ official site have working example of all type of exchanges in Python, Java, Ruby, PHP and C#.
+
+**Hello World!** [Python](https://www.rabbitmq.com/tutorials/tutorial-one-python.html) | [Java](https://www.rabbitmq.com/tutorials/tutorial-one-java.html) | [Ruby](https://www.rabbitmq.com/tutorials/tutorial-one-ruby.html) | [PHP](https://www.rabbitmq.com/tutorials/tutorial-one-php.html) | [C#](https://www.rabbitmq.com/tutorials/tutorial-one-dotnet.html)
+
+**Direct Exchange** [Python](https://www.rabbitmq.com/tutorials/tutorial-four-python.html) | [Java](https://www.rabbitmq.com/tutorials/tutorial-four-java.html) | [Ruby](https://www.rabbitmq.com/tutorials/tutorial-four-ruby.html) | [PHP](https://www.rabbitmq.com/tutorials/tutorial-four-php.html) | [C#](https://www.rabbitmq.com/tutorials/tutorial-four-dotnet.html)
+
+**Topic Exchange** [Python](https://www.rabbitmq.com/tutorials/tutorial-five-python.html) | [Java](https://www.rabbitmq.com/tutorials/tutorial-five-java.html) | [Ruby](https://www.rabbitmq.com/tutorials/tutorial-five-ruby.html) | [PHP](https://www.rabbitmq.com/tutorials/tutorial-five-php.html) | [C#](https://www.rabbitmq.com/tutorials/tutorial-five-dotnet.html)
+
+**Book:** [RabbitMQ in Action: Distributed Messaging for Everyone](http://www.amazon.com/RabbitMQ-Action-Distributed-Messaging-Everyone)
 
 ##Disclaimer
 - I am not an Erlang programmer.
