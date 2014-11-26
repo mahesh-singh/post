@@ -5,10 +5,10 @@ Our new customer just started sprint and the first story which we are delivering
 
 ![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/mockup_registration.png)
 
-Developers put their best effort to finsh entire module. Every thing was great until copule of change request comes.
+Developers put their best effort to finish entire module. Every thing was great until couple of change request comes.
 
 1. Welcome email message must sent after the successful registration. Third party SMTP server must used to send the required messages. 
-2. Registration trough diffrent affiliate link and track those registration through third party API to compare the affiliate performence. 
+2. Registration trough affiliate links and track those registration through third party API to compare the affiliate performance. 
 3. Log audit information about user like registration like time, location etc  
 
 Everything was done, tested and deployed. 
@@ -24,7 +24,7 @@ public void RegisterUser(User user)
     //Send welcome email
     emailService.SendWelcomeEmail(user)
 
-    //Call third party api for affiliate tarcking
+    //Call third party api for affiliate tracking
     someThirdPartyWrapper.log(user)
 
     //audit log
@@ -94,11 +94,11 @@ From the AMQP website:
 
 >AMQP is an Open Standard for Messaging Middleware.
 
->By complying to the AMQP standard, middleware products written for different platforms and in different languages can send messages to one another. AMQP addresses the problem of transporting value-bearing messages across and between organisations in a timely manner.
+>By complying to the AMQP standard, middleware products written for different platforms and in different languages can send messages to one another. AMQP addresses the problem of transporting value-bearing messages across and between organizations in a timely manner.
 
 >AMQP enables complete interoperability for messaging middleware; both the networking protocol and the semantics of broker services are defined in AMQP. 
 
-In nullset AMQP defines
+In null-set AMQP defines
 - Where to send messages (Routing)
 - How to get there (Delivery)
 - What goes in must come out (Fidelity) 
@@ -152,8 +152,8 @@ Steps to install management plugin
     `rabbitmq-service.bat stop`
     `rabbitmq-service.bat start`
 
-By default management plugin will run on http://localhost:55672/
-Default user name and passowrd is guest & guest
+By default management plugin will run on http://localhost:15672/
+Default user name and password is guest & guest
 
 ![Producer and Consumer in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/rabbit_manag_plugin.png)
 
@@ -172,7 +172,7 @@ Default user name and passowrd is guest & guest
 ##Elements
 **Producer** create message and send (publish) into message broker (RabbitMQ). Message must have to parts: a payloads and a label. Payload is data and it can be anything from a simple JSON to MPEG-4 file. Label describe the payloads and how rabbitMQ will determine who should get the copy of message. The communication between publisher and rabbitMQ is one directional and fire and forget.
 
-**Consumer** on the other hand attach to brocker and subscibe to a queue to get the message.  
+**Consumer** on the other hand attach to broker and subscribe to a queue to get the message.  
 
 ![Producer and Consumer in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/produce_consumer_rabbitmq.jpg)
 
@@ -189,6 +189,9 @@ Applications will connect to rabbitMQ by creating TCP connection and get authent
 
 **Binding:** Rule to route the message into one or more queue. This is relationship between exchange and a queue.
 
+![hello world example  in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/hello-world-example-routing.png)
+
+
 When producer publish message in exchange, it contains two parts a payloads and a label. Label is called routing key. Each queue is bound to a routing key or a pattern of routing key. This routing key binding with queue are those rules for which exchange put message into queue.
 
 Exchange receives messages from producer and the other side it pushes them to queues. The exchange must know exactly what to do with a message it receives. Should it be appended to a particular queue? Should it be appended to many queues? Or should it get discarded. The rules for that are defined by the exchange type.  
@@ -199,7 +202,6 @@ There are mainly four type of exchanges available: direct, topic, headers and fa
 
 ![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/fanout_ex_rabbit.jpg)
 
-[sample code]
 
 **Direct exchange:**
 As we have seen Fanout exchange broadcasts all messages to all queues. In direct exchange message goes to the queues whose binding key exactly matches the routing key (label) of the message. In direct exchange it is also perfectly legal to bind multiple queues with the same binding key.
@@ -210,20 +212,23 @@ In below example Q1 & Q2 is bind with routing key "Orange", Q3 with yellow and Q
 - Excannge receive message with "Yellow" routing key it will dilliver message to Q3.
 - Exchange receive message with "Green" routing key it will dilliver to Q4. 
 
-![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/direct_exchange_Rabbit.jpg)
+![Direct exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/direct_exchange_Rabbit.jpg)
 
 **Topic exchange:**
 Direct exchange gives flexibility to bind routing key with queues, but still it lacks binding based upon pattern. In topic exchanges will route messages to one or many queues based on the pattern that was used to bind a queue to an exchange. Messages sent to a topic exchange can't have an arbitrary routing_key - it must be a list of words, delimited by dots. A valid routing key examples are "stock.usd.nyse", "nyse.vmw", "quick.orange.rabbit". Queues can bind with exchange bu using patterns like "*.usd.*" to get all the message where "usd" is a middle part of the message.
 
-![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/topic_exchange_rabbitMQ.jpg)
+![Topic exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/topic_exchange_rabbitMQ.jpg)
 
 In above example 
 1. Q1 will get all the message which start with log. like log.debug, log.error, log.info and log.warn etc.
+
 2. Q2 will get message with routing key log.error.
+
 3. Q3 will only get log.info message.
+
 4. Q4 will get all the message.
 
-##Administering
+
 ##Summery
 ##Further Read
 
