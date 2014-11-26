@@ -9,7 +9,7 @@ Developers put their best effort to finish entire module. Every thing was great 
 
 1. Welcome email message must sent after the successful registration. Third party SMTP server must used to send the required messages. 
 2. Registration trough affiliate links and track those registration through third party API to compare the affiliate performance. 
-3. Log audit information about user like registration like time, location etc  
+3. Log audit information about user registration like time, location etc  
 
 Everything was done, tested and deployed. 
 
@@ -34,14 +34,14 @@ public void RegisterUser(User user)
 
 New shiny registration module went live and work like a charm. Suddenly registration module show error once user finish the registration. Investigation shows that third party SMTP APIs were down for some time. During the downtime user registered but never received confirmation emails.
 
-Also amuse what if
+Also assume what if
 - Third party API stops working
 - Audit log table get locked due to high tragic
 - You asked to send user's information to other internal system which are written in different language.
 - Any many more such cases where direct communication required between applications
 
 ##Can our code scale to new requirement or remove dependency of third party APIs?
-Assume that if our RegisterUser method will only register the user. Other task can be performed by other applications without impacting the user registration.
+Assume that if our RegisterUser method will only register the user, other task can be performed by other applications without impacting the user registration.
 
 Lets change the code
 
@@ -60,17 +60,19 @@ public void RegisterUser(User user)
 }
 ```
 
-These message can be stored in central place so that other application can access. Now email service, third party APIs and audit log service can run independently and perform their task without impacting user registration module.
+These messages can be stored in central place so that other application can access. Now email service, third party APIs and audit log service can run independently and perform their task without impacting user registration module.
 Even in case of any issues in email or third party service our registration module keep working and once these services up again they can continue their task without losing any data. 
 
 ##What is messaging
 A way of exchange messages from point A to point B or many points C.
-Its enables distributed communication that is loosely coupled. Message sender  sends a message to a **destination**, and the message recipient can retrieve the message from the **destination**. However, the sender and the receiver do not have to be available at the same time in order to communicate.
-To understand better email is a great example of messaging which enables people to communicate
+It enables distributed communication that is loosely coupled. Message sender  sends a message to a **destination**, and the message recipient can retrieve the message from the **destination**. However, the sender and the receiver do not have to be available at the same time in order to communicate.
+To understand better email is a great example of messaging which enables people to communicate.
+
 People use messaging for scale the applications. 
+
 You want to use messaging
-- Send data to many applications without calling their API directly in your application. 
-- Want to do things in certain order like transactional system.
+- Send data to many applications without calling their API directly in your application 
+- Want to do things in certain order like transactional system
 - Monitor data feeds like number of registration in application
 
 The component which receive the message from sender and recipient retrieve the message from, called **message broker** or **messaging middleware**.
@@ -183,7 +185,7 @@ Applications will connect to rabbitMQ by creating TCP connection and get authent
 
 
 ###Exchanges, Queues and Binding
-**Exchange:** Producer publish messages in exchange. Producer never directly communicate through consumer applications
+**Exchange:** Producer publishes messages in exchange. Producer never directly communicate through consumer applications.
 
 **Queue:** Message end up in queue and receive by consumer.
 
@@ -198,7 +200,7 @@ Exchange receives messages from producer and the other side it pushes them to qu
 
 There are mainly four type of exchanges available: direct, topic, headers and fanout. This tutorial will focus on direct, topic and fanout exchange.
 
-**Fanout Exchange:** It brodcast all the messges it recive to all the queues it knows. 
+**Fanout Exchange:** Fanout Exchange brodcast all the messges it recive to all the queues it knows. 
 
 ![Fanout exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/fanout_ex_rabbit.jpg)
 
@@ -208,26 +210,26 @@ As we have seen Fanout exchange broadcasts all messages to all queues. In direct
 
 In below example Q1 & Q2 is bind with routing key "Orange", Q3 with yellow and Q4 with Orange, black and green.
 
-- Excannge receive message with "Orange"  routing key it will dilliver  message to Q1, Q2, and Q4 
-- Excannge receive message with "Yellow" routing key it will dilliver message to Q3.
-- Exchange receive message with "Green" routing key it will dilliver to Q4. 
+- Excannge receive message with "Orange"  routing key and it will dilliver  message to Q1, Q2, and Q4 
+- Excannge receive message with "Yellow" routing key and it will dilliver message to Q3.
+- Exchange receive message with "Green" routing key and it will dilliver to Q4. 
 
 ![Direct exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/direct_exchange_Rabbit.jpg)
 
 **Topic exchange:**
-Direct exchange gives flexibility to bind routing key with queues, but still it lacks binding based upon pattern. In topic exchanges will route messages to one or many queues based on the pattern that was used to bind a queue to an exchange. Messages sent to a topic exchange can't have an arbitrary routing_key - it must be a list of words, delimited by dots. A valid routing key examples are "stock.usd.nyse", "nyse.vmw", "quick.orange.rabbit". Queues can bind with exchange bu using patterns like "*.usd.*" to get all the message where "usd" is a middle part of the message.
+Direct exchange gives flexibility to bind routing key with queues, but still it lacks binding based upon pattern. In topic exchanges will route messages to one or many queues based on the pattern that was used to bind a queue to an exchange. Messages sent to a topic exchange can't have an arbitrary routing_key - it must be a list of words, delimited by dots. A valid routing key examples are "`stock.usd.nyse", "nyse.vmw`", "`quick.orange.rabbit`". Queues can bind with exchange bu using patterns like "`*.usd.*`" to get all the messages where "usd" is a middle part of the message.
 
 ![Topic exchange in RabbitMQ](https://github.com/mahesh-singh/post/blob/master/img/topic_exchange_rabbitMQ.jpg)
 
 In above example 
 
-1. Q1 will get all the message which start with log. like log.debug, log.error, log.info and log.warn etc.
+1. Q1 will get all the messages which start with log. like log.debug, log.error, log.info and log.warn etc.
 
 2. Q2 will get message with routing key log.error.
 
 3. Q3 will only get log.info message.
 
-4. Q4 will get all the message.
+4. Q4 will get all the messages.
 
 ##Summery
 Messaging enables software applications to connect and scale. RabbitMQ is fast, reliable and flexible messaging solution.  
